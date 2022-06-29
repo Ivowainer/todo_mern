@@ -1,3 +1,4 @@
+import generarJWT from "../helpers/generarJWT.js"
 import User from "../models/User.js"
 
 export const register = async (req, res) => {
@@ -46,7 +47,12 @@ export const login = async (req, res) => {
 
     // Comprobar password 
     if(await user.verifyPassword(password)){
-        return res.json({ msg: 'Logeado correctamente' })
+        return res.json({ 
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            token: generarJWT(user._id),
+        })
     } else {
         const error = new Error("The password is wrong")
         return res.status(403).json({ msg: error.message })
