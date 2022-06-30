@@ -28,7 +28,7 @@ export const register = async (req, res) => {
         const newUser = new User(req.body)
         await newUser.save()
 
-        return res.json({ newUser })
+        res.json({ newUser })
     } catch (error) {
         console.log(error)    
     }

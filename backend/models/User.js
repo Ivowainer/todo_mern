@@ -21,8 +21,14 @@ const userSchema = new mongoose.Schema({
     },
     token: {
         type: String,
-        unique: true
-    }
+        default: ""
+    },
+    tasks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Task'
+        }
+    ]
 })
 
 userSchema.pre('save', async function(next) {

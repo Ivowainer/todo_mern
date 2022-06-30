@@ -10,7 +10,7 @@ const checkAuth = async (req, res, next) => {
         try {
             const decoded = await jwt.verify(token, process.env.JWT_SECRET)
 
-            req.user = await User.findById(decoded.id)
+            req.user = await User.findById(decoded.id).select("-password -email")
             
             return next()
         } catch {
