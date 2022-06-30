@@ -17,7 +17,7 @@ export const createTask = async (req, res) => {
         
         const taskSaved = await task.save()
 
-        res.json({ newTask })
+        res.json({ taskSaved })
     } catch {
         const error = new Error("It ocurred an error in taskController, please inform the creator")
         return res.status(404).json({ msg: error.message })
