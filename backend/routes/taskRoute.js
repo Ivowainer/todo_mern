@@ -1,5 +1,5 @@
 import express from 'express'
-import { createTask, getTask, getTasks } from '../controllers/taskController.js'
+import { createTask, editTask, getTask, getTasks } from '../controllers/taskController.js'
 import checkAuth from '../middlewares/checkAuth.js'
 
 const router = express.Router()
@@ -9,7 +9,10 @@ router
     .post(checkAuth, createTask)
     .get(checkAuth, getTasks)
 
-router.get('/:id', checkAuth, getTask)
+router
+    .route('/:id')
+    .get(checkAuth, getTask)
+    .post(checkAuth, editTask)
 
 export default router
 

@@ -47,9 +47,8 @@ export const getTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id)
         
-        const creatorUser = await User.findById(task.creator)
-
-        if(req.user._id.toString() !== creatorUser._id.toString()){
+        // Comprobación
+        if(req.user._id.toString() !== task.creator._id.toString()){
             const error = new Error("You don't have enough permissions")
             return res.status(403).json({ msg: error.message })
         }
@@ -59,7 +58,28 @@ export const getTask = async (req, res) => {
         const error = new Error("The task doesn't exists")
         return res.status(401).json({ msg: error.message })
     }
+}
 
+export const editTask = async (req, res) => {
+    try {
+        const task = await Task.findById(req.params.id)
 
+        // Comprobación
+        if(req.user._id.toString() !== task.creator._id.toString()){
+            const error = new Error("You don't have enough permissions")
+            return res.status(403).json({ msg: error.message })
+        }
+
+        task.name = req.body.name
+        task.priority = req.body.priority
+
+        const taskUpdated = await task.save()
+
+        res.json({ taskUpdated })
+
+    } catch {
+        const error = new Error("The task doesn't exists")
+        return res.status(401).json({ msg: error.message })
+    }
 }
 
