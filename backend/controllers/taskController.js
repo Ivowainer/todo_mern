@@ -43,3 +43,16 @@ export const getTasks = async (req, res) => {
     }
 }
 
+export const getTask = async (req, res) => {
+    try {
+        const task = await Task.findById("62bdfdb858c1e2f04d9ac672")
+
+        res.json({ task })
+    } catch (err) {
+        const error = new Error("The task doesn't exists")
+        return res.status(401).json({ msg: error.message })
+    }
+
+
+}
+
