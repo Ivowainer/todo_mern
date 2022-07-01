@@ -45,7 +45,14 @@ export const getTasks = async (req, res) => {
 
 export const getTask = async (req, res) => {
     try {
-        const task = await Task.findById("62bdfdb858c1e2f04d9ac672")
+        const task = await Task.findById(req.params.id)
+        
+        const creatorUser = await User.findById(task.creator)
+
+        if(req.user._id.toString() !== creatorUser._id.toString()){
+            const error = new Error("You don't have enough permissions")
+            return res.status(403).json({ msg: error.message })
+        }
 
         res.json({ task })
     } catch (err) {

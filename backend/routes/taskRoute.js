@@ -9,7 +9,7 @@ router
     .post(checkAuth, createTask)
     .get(checkAuth, getTasks)
 
-router.get('/:id', getTask)
+router.get('/:id', checkAuth, getTask)
 
 export default router
 
