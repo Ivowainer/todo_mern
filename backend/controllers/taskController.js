@@ -93,6 +93,7 @@ export const deleteTask = async (req, res) => {
             return res.status(403).json({ msg: error.message })
         }
 
+        // Delete task
         const taskDeleted = await task.deleteOne()
 
         res.json({ taskDeleted })
