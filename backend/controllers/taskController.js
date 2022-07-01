@@ -10,7 +10,7 @@ export const createTask = async (req, res) => {
 
     const user = await User.findById(req.user._id)
 
-    if(nameTaskExists){
+    if(nameTaskExists?.creator?.toString() === req.user._id.toString() && nameTaskExists?.name?.toString() === req.body.name.toString()){
         const error = new Error("A task with the same name already exists")
         return res.status(401).json({ msg: error.message })
     }
@@ -77,6 +77,25 @@ export const editTask = async (req, res) => {
 
         res.json({ taskUpdated })
 
+    } catch {
+        const error = new Error("The task doesn't exists")
+        return res.status(401).json({ msg: error.message })
+    }
+}
+
+export const deleteTask = async (req, res) => {
+    try{
+        const task = await Task.findById(req.params.id)
+
+        // Comprobación
+        if(req.user._id.toString() !== task.creator._id.toString()){
+            const error = new Error("You don't have enough permissions")
+            return res.status(403).json({ msg: error.message })
+        }
+
+        const taskDeleted = await task.deleteOne()
+
+        res.json({ taskDeleted })
     } catch {
         const error = new Error("The task doesn't exists")
         return res.status(401).json({ msg: error.message })
