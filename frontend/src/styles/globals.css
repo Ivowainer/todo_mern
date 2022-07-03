@@ -1,3 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+*{
+    font-family: 'Ubuntu';
+}
+
+.bg-gen{
+    background-image: url('../../public/blob-scene-haikei.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.bg-login{
+    background-image: url('../../public/circle-scatter-haikei.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
