@@ -13,7 +13,7 @@ const register = () => {
 
   return (
     <>
-      <MainLayout page="Home | todoCW"/>
+      <MainLayout page="Sign Up | todoCW"/>
 
       <div className="bg-gen h-screen w-screen py-8 px-5">
         <Panel />

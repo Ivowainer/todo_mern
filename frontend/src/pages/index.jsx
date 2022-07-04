@@ -17,7 +17,7 @@ export default function Home() {
   
   return (
     <>
-      <MainLayout page="Home | todoCW"/>
+      <MainLayout page="Sign In | todoCW"/>
 
       <div className="bg-gen h-screen w-screen py-8 px-5">
         <Panel />

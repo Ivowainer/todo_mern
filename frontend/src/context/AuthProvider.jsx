@@ -5,8 +5,12 @@ export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
+    const [alert, setAlert] = useState({})
+    const [user, setUser] = useState({})
 
-    const registerUser = async({ user }) => {
+    const registerUser = async(user) => {
+        setUser({user})
+
         console.log(user)
     }
 
@@ -15,7 +19,9 @@ const AuthProvider = ({ children }) => {
             value={{
                 login,
                 setLogin,
-                registerUser
+                registerUser,
+                alert,
+                setAlert
             }}
         >
             {children}

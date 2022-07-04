@@ -3,20 +3,51 @@ import { FaFacebookF } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
 import { useEffect } from 'react';
-
 import Link from 'next/link'
+import { useState } from 'react'
 
 import Icons from './Icons';
 import Input from './Input';
 import useAuthProvider from '../../hooks/useAuthProvider';
+import Alert from '../Alert';
 
 const Login = () => {
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const { login, setLogin } = useAuthProvider()
+  const { login, setLogin, registerUser, setAlert, alert } = useAuthProvider()
 
   useEffect(() => {
     setLogin(true)
   }, [])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+  
+    if(!login && userName === ''){
+      setAlert({
+        msg: "Fill all the fields",
+        error: true
+      })
+
+      setTimeout(() => {
+        setAlert({})
+      }, 2000)
+      return
+    }
+
+    if([email, password].includes('')){
+      setAlert({
+        msg: "Fill all the fields",
+        error: true
+      })
+
+      return
+    }
+
+    registerUser({ userName, email, password })
+  }
 
   return (
     <div className='flex flex-col flex-1 max-w-full px-20 py-20 items-center gap-6'>
@@ -28,11 +59,38 @@ const Login = () => {
         </div>
 
         <p className='text-sm text-gray-400'>Or use email account</p>
+        
+        {Object.entries(alert).length != 0 && <Alert />}
 
-        <form className='flex flex-col items-center gap-2'>
-          {login ? "" : <Input icon={<AiOutlineUser />} type="text" htmlfor="text" placeholder="Username"/>}
-          <Input icon={<AiOutlineMail />} type="email" htmlfor="email" placeholder="Email"/>
-          <Input icon={<RiLockPasswordLine />} type="password" htmlfor="password" placeholder="Password"/>
+        <form onSubmit={handleSubmit} className='flex flex-col items-center gap-2'>
+
+          {login ? "" : ( 
+            <Input 
+              set={(e => setUserName(e.target.value))} 
+              value={userName} 
+              icon={<AiOutlineUser />} 
+              type="text" 
+              htmlfor="text" 
+              placeholder="Username"
+            /> 
+          )}
+          <Input 
+            icon={<AiOutlineMail />} 
+            set={(e => setEmail(e.target.value))} 
+            value={email} 
+            type="email" 
+            htmlfor="email" 
+            placeholder="Email"
+          />
+
+          <Input 
+            icon={<RiLockPasswordLine />} 
+            set={(e => setPassword(e.target.value))} 
+            value={password} 
+            type="password" 
+            htmlfor="password" 
+            placeholder="Password"
+          />
 
           {login && <Link href="/"><a className='mb-3 text-sm text-gray-400 underline'>Forgot your password?</a></Link>}
 
