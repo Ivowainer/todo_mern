@@ -2,8 +2,16 @@ import Image from 'next/image'
 
 import Panel from '../components/loginpanel/Panel';
 import MainLayout from "../layout/Head";
+import usePanelProvider from '../hooks/usePanelProvider';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const { setLogin } = usePanelProvider()
+
+  useEffect(() => {
+    setLogin(true)
+  }, [])
+  
   return (
     <>
       <MainLayout page="Home | todoCW"/>
@@ -14,3 +22,5 @@ export default function Home() {
     </>
   )
 }
+
+console.log("i,")
