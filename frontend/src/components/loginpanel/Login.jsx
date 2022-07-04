@@ -25,6 +25,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
   
+    //Comprobaciones
     if(!login && userName === ''){
       setAlert({
         msg: "Fill all the fields",
@@ -36,13 +37,38 @@ const Login = () => {
       }, 2000)
       return
     }
+    if(!login && userName.length < 3){
+      setAlert({
+        msg: "The username must have at least 3 characters",
+        error: true
+      })
 
+      setTimeout(() => {
+        setAlert({})
+      }, 2000)
+
+      return
+    }
     if([email, password].includes('')){
       setAlert({
         msg: "Fill all the fields",
         error: true
       })
 
+      setTimeout(() => {
+        setAlert({})
+      }, 2000)
+      return
+    }
+    if(password.length < 6){
+      setAlert({
+        msg: "The password must have at least 6 characters",
+        error: true
+      })
+
+      setTimeout(() => {
+        setAlert({})
+      }, 2000)
       return
     }
 
@@ -59,7 +85,7 @@ const Login = () => {
         </div>
 
         <p className='text-sm text-gray-400'>Or use email account</p>
-        
+
         {Object.entries(alert).length != 0 && <Alert />}
 
         <form onSubmit={handleSubmit} className='flex flex-col items-center gap-2'>
