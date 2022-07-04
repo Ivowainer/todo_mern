@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
 import Panel from '../components/loginpanel/panel'
-import usePanelProvider from '../hooks/usePanelProvider'
+import useAuthProvider from '../hooks/useAuthProvider'
 import MainLayout from '../layout/Head'
 
 const register = () => {
-  const { login, setLogin } = usePanelProvider()
+  const { setLogin } = useAuthProvider()
 
   useEffect(() => {
     setLogin(false)

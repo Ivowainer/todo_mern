@@ -8,11 +8,11 @@ import Link from 'next/link'
 
 import Icons from './Icons';
 import Input from './Input';
-import usePanelProvider from '../../hooks/usePanelProvider';
+import useAuthProvider from '../../hooks/useAuthProvider';
 
 const Login = () => {
 
-  const { login, setLogin } = usePanelProvider()
+  const { login, setLogin } = useAuthProvider()
 
   useEffect(() => {
     setLogin(true)

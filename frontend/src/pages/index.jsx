@@ -2,14 +2,17 @@ import Image from 'next/image'
 
 import Panel from '../components/loginpanel/Panel';
 import MainLayout from "../layout/Head";
-import usePanelProvider from '../hooks/usePanelProvider';
+import useAuthProvider from '../hooks/useAuthProvider';
 import { useEffect } from 'react';
+import clientAxios from '../helpers/clientAxios';
 
 export default function Home() {
-  const { setLogin } = usePanelProvider()
+  const { setLogin } = useAuthProvider()
 
   useEffect(() => {
     setLogin(true)
+
+    const { data } = clientAxios()
   }, [])
   
   return (
@@ -22,5 +25,3 @@ export default function Home() {
     </>
   )
 }
-
-console.log("i,")

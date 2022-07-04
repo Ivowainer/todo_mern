@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import usePanelProvider from '../../hooks/usePanelProvider'
+import useAuthProvider from '../../hooks/useAuthProvider'
 
 const Register = () => {
-  const { login } = usePanelProvider()
+  const { login } = useAuthProvider()
 
   return (
     <div className='bg-login px-20 h-full flex flex-col gap-5 justify-center items-center text-center py-10 text-white'>
