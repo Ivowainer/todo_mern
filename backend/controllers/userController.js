@@ -24,14 +24,10 @@ export const register = async (req, res) => {
     }
 
     /* Registrar usuario */
-    try {
-        const newUser = new User(req.body)
-        await newUser.save()
+    const newUser = new User(req.body)
+    await newUser.save()
 
-        res.json({ newUser })
-    } catch (error) {
-        console.log(error)    
-    }
+    res.json({ newUser })
 }
 
 export const login = async (req, res) => {

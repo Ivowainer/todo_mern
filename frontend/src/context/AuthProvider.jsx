@@ -1,27 +1,70 @@
 import { useState, createContext } from 'react'
+import { useRouter } from 'next/router'
+
 import clientAxios from '../helpers/clientAxios'
 
 export const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
+    const router = useRouter()
+
     const [login, setLogin] = useState(false)
     const [alert, setAlert] = useState({})
 
-    const registerUser = async(user) => {
-
+    const registerUser = async (user) => {
         try {
-            const { data } = clientAxios.post('http://localhost:4000/api/users', user)
+            const { data } = await clientAxios.post('/users', user)
 
-            /* console.log(s.response.data) */
+            console.log(data)
 
-            /* setAlert({
-                msg: "The account has been created with successful"
-            }) */
+            setAlert({
+                msg: "The account has been created with successful",
+                error: false
+            })
+            setTimeout(() => {
+                setAlert({})    
+
+                router.push('/')
+            }, 2000)
+
+            return
+
         } catch (error) {
-            console.log(error)
-        }
+            setAlert({
+                msg: error.response.data.msg,
+                error: true
+            })
+            setTimeout(() => {
+                setAlert({})
+            }, 2000)
 
-        
+            return
+        }
+    }
+
+    const loginUser = async (user) => {
+        try {
+            const { data } = await clientAxios.post('/users/login', user)
+
+            document.cookie = {
+                token: data.token,
+                id: data._id
+            }
+
+            console.log(data)
+
+            console.log(document.cookie.token)
+        } catch (error) {
+            setAlert({
+                msg: error.response.data.msg,
+                error: true
+            })
+            setTimeout(() => {
+                setAlert({})
+            }, 2000)
+
+            return
+        }
     }
 
     return (
@@ -31,7 +74,8 @@ const AuthProvider = ({ children }) => {
                 setLogin,
                 registerUser,
                 alert,
-                setAlert
+                setAlert,
+                loginUser
             }}
         >
             {children}

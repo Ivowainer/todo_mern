@@ -12,11 +12,11 @@ import useAuthProvider from '../../hooks/useAuthProvider';
 import Alert from '../Alert';
 
 const Login = () => {
-  const [userName, setUserName] = useState('')
+  const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const { login, setLogin, registerUser, setAlert, alert } = useAuthProvider()
+  const { login, setLogin, registerUser, setAlert, alert, loginUser } = useAuthProvider()
 
   useEffect(() => {
     setLogin(true)
@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault()
   
     //Comprobaciones
-    if(!login && userName === ''){
+    if(!login && username === ''){
       setAlert({
         msg: "Fill all the fields",
         error: true
@@ -37,7 +37,7 @@ const Login = () => {
       }, 2000)
       return
     }
-    if(!login && userName.length < 3){
+    if(!login && username.length < 3){
       setAlert({
         msg: "The username must have at least 3 characters",
         error: true
@@ -72,7 +72,23 @@ const Login = () => {
       return
     }
 
-    registerUser({ userName, email, password })
+    if(!login){
+      await registerUser({ username, email, password })
+
+      setUserName('')
+      setEmail('')
+      setPassword('')
+      return
+    }
+
+    if(login){
+      await loginUser({ email, password })
+
+      setUserName('')
+      setEmail('')
+      setPassword('')
+      return
+    }
   }
 
   return (
@@ -93,7 +109,7 @@ const Login = () => {
           {login ? "" : ( 
             <Input 
               set={(e => setUserName(e.target.value))} 
-              value={userName} 
+              value={username} 
               icon={<AiOutlineUser />} 
               type="text" 
               htmlfor="text" 
