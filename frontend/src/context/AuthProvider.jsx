@@ -6,12 +6,22 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [alert, setAlert] = useState({})
-    const [user, setUser] = useState({})
 
     const registerUser = async(user) => {
-        setUser({user})
 
-        console.log(user)
+        try {
+            const { data } = clientAxios.post('http://localhost:4000/api/users', user)
+
+            /* console.log(s.response.data) */
+
+            /* setAlert({
+                msg: "The account has been created with successful"
+            }) */
+        } catch (error) {
+            console.log(error)
+        }
+
+        
     }
 
     return (
