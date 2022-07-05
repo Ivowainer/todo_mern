@@ -43,9 +43,11 @@ export const login = async (req, res) => {
 
     // Comprobar password 
     if(await user.verifyPassword(password)){
+        const expires = new Date()
+        expires.setHours(expires.getHours() + 1);
 
         res.cookie('token', generarJWT(user._id), {
-            expire: new Date() + 3600000,
+            expires,
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production'
         }).json({ 
@@ -62,8 +64,8 @@ export const login = async (req, res) => {
 
 export const getUser = async (req, res) => {
     if(!req.user){
-        return res.status(401).json({ msg: "f" })
+        return res.status(401).json({ error: true })
     } 
     
-    console.log('Existe')
+    res.json( req.user )
 }

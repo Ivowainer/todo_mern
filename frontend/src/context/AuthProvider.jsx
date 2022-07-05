@@ -12,7 +12,13 @@ const AuthProvider = ({ children }) => {
     const [alert, setAlert] = useState({})
 
     const getAuth = async () => {
-        const { data } = await clientAxios('/users/user')
+        try {
+            const { data } = await clientAxios('/users/user')
+
+            console.log(data)
+        } catch {
+            await router.push('/')
+        }
     }
 
     const registerUser = async (user) => {
