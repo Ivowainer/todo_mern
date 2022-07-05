@@ -46,14 +46,24 @@ const AuthProvider = ({ children }) => {
         try {
             const { data } = await clientAxios.post('/users/login', user)
 
-            document.cookie = {
+            const userData = {
                 token: data.token,
                 id: data._id
             }
 
-            console.log(data)
+            document.cookie = JSON.stringify(userData)
 
-            console.log(document.cookie.token)
+            setAlert({
+                msg: "Welcome again!",
+                error: false
+            })
+
+            setTimeout(() => {
+                setAlert({})
+                router.push('/panel')
+            }, 2000)
+
+            return
         } catch (error) {
             setAlert({
                 msg: error.response.data.msg,
