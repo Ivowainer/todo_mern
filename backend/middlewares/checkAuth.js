@@ -4,8 +4,8 @@ import User from "../models/User.js";
 const checkAuth = async (req, res, next) => {
     let token;
 
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = await req.headers.authorization.split(' ')[1]
+    if(req.cookies?.token){
+        token = await req.cookies.token
 
         try {
             const decoded = await jwt.verify(token, process.env.JWT_SECRET)

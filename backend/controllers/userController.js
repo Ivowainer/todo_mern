@@ -43,14 +43,27 @@ export const login = async (req, res) => {
 
     // Comprobar password 
     if(await user.verifyPassword(password)){
-        return res.json({ 
+
+        res.cookie('token', generarJWT(user._id), {
+            expire: new Date() + 3600000,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production'
+        }).json({ 
             _id: user._id,
             username: user.username,
             email: user.email,
-            token: generarJWT(user._id),
         })
+        
     } else {
         const error = new Error("The password is wrong")
-        return res.status(403).json({ msg: error.message })
+        res.status(403).json({ msg: error.message })
     }
+}
+
+export const getUser = async (req, res) => {
+    if(!req.user){
+        return res.status(401).json({ msg: "f" })
+    } 
+    
+    console.log('Existe')
 }

@@ -11,6 +11,10 @@ const AuthProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [alert, setAlert] = useState({})
 
+    const getAuth = async () => {
+        const { data } = await clientAxios('/users/user')
+    }
+
     const registerUser = async (user) => {
         try {
             const { data } = await clientAxios.post('/users', user)
@@ -30,13 +34,15 @@ const AuthProvider = ({ children }) => {
             return
 
         } catch (error) {
-            setAlert({
+            /* setAlert({
                 msg: error.response.data.msg,
                 error: true
             })
             setTimeout(() => {
                 setAlert({})
-            }, 2000)
+            }, 2000) */
+
+            console.log(error)
 
             return
         }
@@ -45,13 +51,6 @@ const AuthProvider = ({ children }) => {
     const loginUser = async (user) => {
         try {
             const { data } = await clientAxios.post('/users/login', user)
-
-            const userData = {
-                token: data.token,
-                id: data._id
-            }
-
-            document.cookie = JSON.stringify(userData)
 
             setAlert({
                 msg: "Welcome again!",
@@ -85,7 +84,8 @@ const AuthProvider = ({ children }) => {
                 registerUser,
                 alert,
                 setAlert,
-                loginUser
+                loginUser,
+                getAuth
             }}
         >
             {children}

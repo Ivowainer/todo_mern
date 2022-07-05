@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     setLogin(true)
 
-    const { data } = clientAxios()
+    /* const { data } = clientAxios() */
   }, [])
   
   return (
