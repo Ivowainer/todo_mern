@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
             setTimeout(() => {
                 setAlert({})
-                router.push('/panel')
+                router.push('/main')
             }, 2000)
 
             return

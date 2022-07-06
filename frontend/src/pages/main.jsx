@@ -1,9 +1,12 @@
 import { useEffect } from 'react'
+import Main from '../components/todoPanel/Main'
 import clientAxios from '../helpers/clientAxios'
+
 import useAuthProvider from '../hooks/useAuthProvider'
 import MainLayout from '../layout/Head'
+import PanelLayout from '../layout/PanelLayout'
 
-const panel = () => {
+const main = () => {
 
     const { getAuth } = useAuthProvider()
     
@@ -14,10 +17,12 @@ const panel = () => {
     return (
         <>
             <MainLayout page="Panel | todoCW"/>
-            
-            <div>panel</div>
+        
+            <PanelLayout>
+                <Main />
+            </PanelLayout>
         </>
     )
 }
 
-export default panel
+export default main
