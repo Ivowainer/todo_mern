@@ -1,5 +1,6 @@
 import Aside from '../components/todoPanel/Aside'
 import Main from '../components/todoPanel/Main'
+import TodoAside from '../components/todoPanel/TodoAside'
 
 const PanelLayout = ({ children }) => {
   return (
@@ -9,7 +10,7 @@ const PanelLayout = ({ children }) => {
           <div className="flex h-full w-full mb-4 gap-5">
             <Aside />
             {children}
-            <Aside />
+            <TodoAside />
           </div>
       </div>
     </div>

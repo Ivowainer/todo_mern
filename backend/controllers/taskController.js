@@ -27,7 +27,7 @@ export const createTask = async (req, res) => {
         await user.save();
 
         res.json({ taskSaved })
-    } catch {
+    } catch (err) {
         const error = new Error("It ocurred an error in taskController, please inform the creator")
         return res.status(404).json({ msg: error.message })
     }

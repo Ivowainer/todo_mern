@@ -40,13 +40,13 @@ const AuthProvider = ({ children }) => {
             return
 
         } catch (error) {
-            /* setAlert({
+            setAlert({
                 msg: error.response.data.msg,
                 error: true
             })
             setTimeout(() => {
                 setAlert({})
-            }, 2000) */
+            }, 2000)
 
             console.log(error)
 
