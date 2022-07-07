@@ -6,7 +6,7 @@ import useAuthProvider from '../hooks/useAuthProvider'
 import MainLayout from '../layout/Head'
 import PanelLayout from '../layout/PanelLayout'
 
-const main = () => {
+const tasks = () => {
 
     const { getAuth } = useAuthProvider()
     
@@ -16,7 +16,7 @@ const main = () => {
 
     return (
         <>
-            <MainLayout page="Panel | todoCW"/>
+            <MainLayout page="Tasks | todoCW"/>
         
             <PanelLayout>
                 <Main />
@@ -25,4 +25,4 @@ const main = () => {
     )
 }
 
-export default main
+export default tasks

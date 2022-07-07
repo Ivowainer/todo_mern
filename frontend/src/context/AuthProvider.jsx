@@ -65,7 +65,7 @@ const AuthProvider = ({ children }) => {
 
             setTimeout(() => {
                 setAlert({})
-                router.push('/main')
+                router.push('/tasks')
             }, 2000)
 
             return
