@@ -42,9 +42,9 @@ const TaskProvider = ({ children }) => {
       }, 2500)
       return
     }
-    if(description.length >= 14){
+    if(description.length >= 60){
       setAlert({
-        msg: "The maxium of caracters is 14",
+        msg: "The maxium of caracters is 60",
         error: true
       })
       
@@ -53,7 +53,7 @@ const TaskProvider = ({ children }) => {
       }, 2500)
       return
     }
-    if([name, description].length < 3){
+    if(name.length < 3){
       setAlert({
         msg: "The minium of caracters is 3",
         error: true
@@ -82,15 +82,35 @@ const TaskProvider = ({ children }) => {
       setDescription('')
       setPriority('')
     } catch (error) {
-      /* setAlert({
+      setAlert({
         msg: error.response.data.msg,
         error: true
       })
       setTimeout(() => {
         setAlert({})
-      }, 2500) */ //TODO
-      console.log(error)
+      }, 2500) 
     }  
+  }
+  
+  const deleteTask = async (id) => {
+    try {
+      const { data } = await clientAxios.delete(`/tasks/${id}`)
+
+      const taskUpdated = tasks.filter(taskState => taskState._id !== id)
+
+      console.log(taskUpdated)
+
+      setTasks(taskUpdated)
+    } catch (err) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+    }
   }
 
   return (
@@ -101,7 +121,8 @@ const TaskProvider = ({ children }) => {
         priority, setPriority,
         createTask,
         isOpen, setIsOpen,
-        tasks
+        tasks,
+        deleteTask
       }}
     >
       {children}
