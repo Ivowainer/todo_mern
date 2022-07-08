@@ -1,9 +1,12 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useTaskProvider from '../hooks/useTaskProvider'
+import useAuthProvider from '../hooks/useAuthProvider'
+import Alert from './Alert'
 
-const ModalPanel = ({ setIsOpen, isOpen }) => {
-  const { name, setName, description, setDescription, priority, setPriority, createTask } = useTaskProvider()
+const ModalPanel = () => {
+  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen } = useTaskProvider()
+  const { alert } = useAuthProvider()
 
   const cancelButtonRef = useRef(null)
 
@@ -37,35 +40,36 @@ const ModalPanel = ({ setIsOpen, isOpen }) => {
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                      <Dialog.Title as="h3" className="text-xl leading-6 text-gray-500 font-bold border-b">
                         Add Task
                       </Dialog.Title>
+                      {Object.keys(alert).length != 0 && <Alert /> }
                       <form className="mt-2 flex flex-col gap-5">
                         <div className="flex flex-col">
-                            <label htmlFor="name" className=''>Name of the task</label>
+                            <label htmlFor="name" className='text-gray-600 font-semibold mt-2'>Name</label>
                             <input 
                               type="text" 
                               id='name' 
-                              className='bg-gray-300 rounded-md outline-none px-2 py-1' 
+                              className='bg-gray-100 rounded-md outline-none px-3 py-1' 
                               value={name}
                               onChange={e => setName(e.target.value)}
-                              placeholder=""
+                              placeholder="Name of the task"
                             />
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="description" className=''>Description of the task</label>
+                            <label htmlFor="description" className='text-gray-600 font-semibold'>Description</label>
                             <textarea 
                               type="text" 
                               id='description' 
-                              className='bg-gray-300 rounded-md outline-none px-2 py-1' 
+                              className='bg-gray-100 rounded-md outline-none px-3 py-1' 
                               value={description}
                               onChange={e => setDescription(e.target.value)}
-                              placeholder="Description"
+                              placeholder="Description of the task"
                             ></textarea>
                         </div>
                         <div className="flex flex-col">
-                            <label htmlFor="priority" className=''>Priority</label>
-                            <select name="select" id="priority" value={priority} onChange={e => setPriority(e.target.value)}>
+                            <label htmlFor="priority" className='text-gray-600 font-semibold mb-2'>Priority</label>
+                            <select name="select" id="priority" value={priority} onChange={e => setPriority(e.target.value)} className="outline-none p-2 rounded-lg bg-gray-100">
                               <option value="">-- Seleccione</option>
                               <option value="High" onChange={e => setPriority(e.target.value)}>High</option>
                               <option value="Medium" onChange={e => setPriority(e.target.value)}>Medium</option>
@@ -80,10 +84,7 @@ const ModalPanel = ({ setIsOpen, isOpen }) => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-default text-base font-medium text-white hover:bg--600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => { 
-                      setIsOpen(false) 
-                      createTask() 
-                    }}
+                    onClick={() => { createTask() }}
                   >
                     Add Task
                   </button>

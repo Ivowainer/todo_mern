@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import clientAxios from '../helpers/clientAxios'
+import useAuthProvider from '../hooks/useAuthProvider'
 
 export const TaskContext = createContext()
 
@@ -7,11 +8,67 @@ const TaskProvider = ({ children }) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState('')
+  const [isOpen, setIsOpen] = useState(false)
+  const [task, setTask] = useState({})
+  const [tasks, setTasks] = useState([])
 
+  const { setAlert } = useAuthProvider()
+
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const { data } = await clientAxios('/tasks')
+
+        setTasks(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    getTasks()
+
+  }, [])
+  
   const createTask = async () => {
-    const { data } = await clientAxios.post('/tasks', { name, description, priority })
+    //Comprobaciones
+    if([name, description, priority].includes('')){
+      setAlert({
+        msg: "Fill all the fields",
+        error: true
+      })
+      
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+      return
+    }
 
-    console.log(data)
+    try {
+      const { data } = await clientAxios.post('/tasks', { name, description, priority })
+
+      setTasks([...tasks, data])
+
+      setAlert({ 
+        msg: "Task created successfully",
+        error: false
+      })
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+
+      setName('')
+      setDescription('')
+      setPriority('')
+    } catch (error) {
+      /* setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+      setTimeout(() => {
+        setAlert({})
+      }, 2500) */ //TODO
+      console.log(error)
+    }  
   }
 
   return (
@@ -20,7 +77,9 @@ const TaskProvider = ({ children }) => {
         name, setName,
         description, setDescription,
         priority, setPriority,
-        createTask
+        createTask,
+        isOpen, setIsOpen,
+        tasks
       }}
     >
       {children}

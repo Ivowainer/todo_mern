@@ -1,11 +1,18 @@
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import Card from './Card'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ModalPanel from '../Modal'
+import useTaskProvider from '../../hooks/useTaskProvider'
+
+import clientAxios from '../../helpers/clientAxios'
 
 const Main = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const { isOpen, setIsOpen, tasks } = useTaskProvider()
+
+  useEffect(() => {
+    console.log(tasks)
+  }, [tasks])
 
   return (
     <>
@@ -16,6 +23,9 @@ const Main = () => {
         </div>
         <div className="bg-white shadow-2xl h-[500px] 2xl:h-[590px] rounded-lg flex w-full px-10 gap-20">
           <div className="flex gap-10 flex-1 flex-wrap overflow-y-scroll">
+            {tasks.map(task => (
+              <Card key={task._id} name={task.name} description={task.description} author={task.author} />
+            ))}
           </div>
         </div>
       </div>

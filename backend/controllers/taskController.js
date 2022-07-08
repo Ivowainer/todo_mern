@@ -20,6 +20,7 @@ export const createTask = async (req, res) => {
         const task = new Task(req.body)
         
         task.creator = req.user._id
+        task.author = user.username
 
         const taskSaved = await task.save()
 
@@ -37,7 +38,7 @@ export const getTasks = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).populate("tasks")
 
-        return res.json({ tasks: user.tasks })
+        res.json( user.tasks )
     } catch (error) {
         console.log(error)
     }
@@ -85,7 +86,9 @@ export const editTask = async (req, res) => {
 
 export const deleteTask = async (req, res) => {
     try{
-        const task = await Task.findById(req.params.id)
+        const task = await Task.findById(req.params.id).populate("creator")
+
+        const userTa = task.creator
 
         // Comprobación
         if(req.user._id.toString() !== task.creator._id.toString()){
@@ -96,10 +99,14 @@ export const deleteTask = async (req, res) => {
         // Delete task
         const taskDeleted = await task.deleteOne()
 
-        res.json({ taskDeleted })
-    } catch {
-        const error = new Error("The task doesn't exists")
-        return res.status(401).json({ msg: error.message })
+        await userTa.tasks.pull(req.params.id)
+        await userTa.save();
+
+        res.json( userTa.tasks )
+    } catch (err){
+       /*  const error = new Error("The task doesn't exists")
+        return res.status(401).json({ msg: error.message }) */
+        console.log(err)
     }
 }
 

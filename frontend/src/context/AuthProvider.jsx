@@ -14,8 +14,6 @@ const AuthProvider = ({ children }) => {
     const getAuth = async () => {
         try {
             const { data } = await clientAxios('/users/user')
-
-            console.log(data)
         } catch {
             await router.push('/')
         }
@@ -24,8 +22,6 @@ const AuthProvider = ({ children }) => {
     const registerUser = async (user) => {
         try {
             const { data } = await clientAxios.post('/users', user)
-
-            console.log(data)
 
             setAlert({
                 msg: "The account has been created with successful",
