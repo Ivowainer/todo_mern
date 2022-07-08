@@ -20,14 +20,14 @@ export const createTask = async (req, res) => {
         const task = new Task(req.body)
         
         task.creator = req.user._id
-        task.author = user.username
+        task.dl = "sii"
 
         const taskSaved = await task.save()
 
         user.tasks.push(taskSaved)
         await user.save();
 
-        res.json({ taskSaved })
+        res.json( taskSaved )
     } catch (err) {
         const error = new Error("It ocurred an error in taskController, please inform the creator")
         return res.status(404).json({ msg: error.message })
@@ -91,7 +91,7 @@ export const deleteTask = async (req, res) => {
         const userTa = task.creator
 
         // Comprobación
-        if(req.user._id.toString() !== task.creator._id.toString()){
+        if(req.user._id.toString() !== userTa._id.toString()){
             const error = new Error("You don't have enough permissions")
             return res.status(403).json({ msg: error.message })
         }
@@ -102,9 +102,9 @@ export const deleteTask = async (req, res) => {
         await userTa.tasks.pull(req.params.id)
         await userTa.save();
 
-        res.json( userTa.tasks )
+        res.json({ taskDeleted })
     } catch (err){
-       /*  const error = new Error("The task doesn't exists")
+        /* const error = new Error("The task doesn't exists")
         return res.status(401).json({ msg: error.message }) */
         console.log(err)
     }
