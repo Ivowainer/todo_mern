@@ -24,3 +24,10 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.word-wrap{
+    max-width: 150px;
+    margin: auto;
+    overflow-wrap: break-word;
+        
+}

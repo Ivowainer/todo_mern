@@ -42,6 +42,28 @@ const TaskProvider = ({ children }) => {
       }, 2500)
       return
     }
+    if(description.length >= 14){
+      setAlert({
+        msg: "The maxium of caracters is 14",
+        error: true
+      })
+      
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+      return
+    }
+    if([name, description].length < 3){
+      setAlert({
+        msg: "The minium of caracters is 3",
+        error: true
+      })
+      
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+      return
+    }
 
     try {
       const { data } = await clientAxios.post('/tasks', { name, description, priority })
