@@ -20,7 +20,7 @@ export const createTask = async (req, res) => {
         const task = new Task(req.body)
         
         task.creator = req.user._id
-        task.dl = "sii"
+        task.author = req.user.username
 
         const taskSaved = await task.save()
 

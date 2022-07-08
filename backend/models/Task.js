@@ -11,6 +11,7 @@ const taskSchema = mongoose.Schema({
         enum: ['Low', 'Medium', 'High']
     },
     description: String,
+    author: String,
     creator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

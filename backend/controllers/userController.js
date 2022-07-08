@@ -44,7 +44,7 @@ export const login = async (req, res) => {
     // Comprobar password 
     if(await user.verifyPassword(password)){
         const expires = new Date()
-        expires.setHours(expires.getHours() + 1);
+        expires.setHours(expires.getHours() + 8);
 
         res.cookie('token', generarJWT(user._id), {
             expires,
