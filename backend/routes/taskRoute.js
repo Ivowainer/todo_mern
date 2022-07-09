@@ -12,7 +12,7 @@ router
 router
     .route('/:id')
     .get(checkAuth, getTask)
-    .post(checkAuth, editTask)
+    .put(checkAuth, editTask)
     .delete(checkAuth, deleteTask)
 
 export default router

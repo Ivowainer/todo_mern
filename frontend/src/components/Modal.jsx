@@ -5,7 +5,7 @@ import useAuthProvider from '../hooks/useAuthProvider'
 import Alert from './Alert'
 
 const ModalPanel = () => {
-  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen } = useTaskProvider()
+  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen, editTask, createMode } = useTaskProvider()
   const { alert } = useAuthProvider()
 
   const cancelButtonRef = useRef(null)
@@ -84,14 +84,18 @@ const ModalPanel = () => {
                   <button
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-default text-base font-medium text-white hover:bg--600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => { createTask() }}
+                    onClick={() => createMode ? createTask() : editTask()}
                   >
-                    Add Task
+                    {createMode ? "Add Task" : "Save Changes"}
                   </button>
                   <button
                     type="button"
                     className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => { setIsOpen(false)
+                                     setName('')
+                                     setDescription('')
+                                     setPriority('')
+                    }}
                     ref={cancelButtonRef}
                   >
                     Cancel

@@ -9,8 +9,10 @@ const TaskProvider = ({ children }) => {
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [createMode, setCreateMode] = useState(true)
   const [task, setTask] = useState({})
   const [tasks, setTasks] = useState([])
+  const [id, setId] = useState('')
 
   const { setAlert } = useAuthProvider()
 
@@ -30,6 +32,7 @@ const TaskProvider = ({ children }) => {
   }, [])
   
   const createTask = async () => {
+
     //Comprobaciones
     if([name, description, priority].includes('')){
       setAlert({
@@ -64,6 +67,8 @@ const TaskProvider = ({ children }) => {
       }, 2500)
       return
     }
+
+    await setCreateMode(true)
 
     try {
       const { data } = await clientAxios.post('/tasks', { name, description, priority })
@@ -101,7 +106,45 @@ const TaskProvider = ({ children }) => {
       console.log(taskUpdated)
 
       setTasks(taskUpdated)
-    } catch (err) {
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
+    }
+  }
+
+  const getTask = async (id) => {
+    setCreateMode(false)
+    setIsOpen(true)
+
+    setId(id)
+
+    try {
+      const task = await clientAxios.get(`/tasks/${id}`)
+      setName(task.data.task.name)
+      setDescription(task.data.task.description)
+      setPriority(task.data.task.priority)
+    } catch (error){
+      console.log(error)
+    }
+  }
+
+  const editTask = async () => {
+    try {
+      const { data } = await clientAxios.put(`/tasks/${id}`, { name, description, priority })
+
+      setId('')
+      setIsOpen(false)
+
+      const taskUpdatedState = tasks.map(taskState => taskState._id === data.taskUpdated._id ? data.taskUpdated : taskState)
+      setTasks(taskUpdatedState)
+
+    } catch (error) {
       setAlert({
         msg: error.response.data.msg,
         error: true
@@ -120,9 +163,10 @@ const TaskProvider = ({ children }) => {
         description, setDescription,
         priority, setPriority,
         createTask,
-        isOpen, setIsOpen,
+        isOpen, setIsOpen, createMode, setCreateMode,
         tasks,
-        deleteTask
+        deleteTask, editTask, getTask,
+        setId, id
       }}
     >
       {children}

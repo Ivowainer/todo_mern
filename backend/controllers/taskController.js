@@ -72,6 +72,7 @@ export const editTask = async (req, res) => {
         }
 
         task.name = req.body.name
+        task.description = req.body.description
         task.priority = req.body.priority
 
         const taskUpdated = await task.save()
