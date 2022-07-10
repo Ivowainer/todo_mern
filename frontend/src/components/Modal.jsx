@@ -1,11 +1,13 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { BsFillTrashFill } from 'react-icons/bs'
+
 import useTaskProvider from '../hooks/useTaskProvider'
 import useAuthProvider from '../hooks/useAuthProvider'
 import Alert from './Alert'
 
 const ModalPanel = () => {
-  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen, editTask, createMode } = useTaskProvider()
+  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen, editTask, createMode, deleteTask, id } = useTaskProvider()
   const { alert } = useAuthProvider()
 
   const cancelButtonRef = useRef(null)
@@ -36,13 +38,13 @@ const ModalPanel = () => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
+              <Dialog.Panel className="relative bg-whiterounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
+                  <Dialog.Title as="h3" className="text-xl leading-6 text-gray-500 font-bold border-b">
+                    {createMode ? 'Add Task' : 'Edit Task'}
+                  </Dialog.Title>
+                  <div className="">
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title as="h3" className="text-xl leading-6 text-gray-500 font-bold border-b">
-                        Add Task
-                      </Dialog.Title>
                       {Object.keys(alert).length != 0 && <Alert /> }
                       <form className="mt-2 flex flex-col gap-5">
                         <div className="flex flex-col">
@@ -78,6 +80,12 @@ const ModalPanel = () => {
                         </div>
                       </form>
                     </div>
+                    {!createMode && (
+                      <div className='mt-10 ml-4 justify-center gap-20 flex'>
+                        <button>Check</button>
+                        <button onClick={() => deleteTask(id)} className='text-[14px] p-[13px] text-center bg-red-500 rounded-full text-white cursor-pointer'><BsFillTrashFill /></button>
+                      </div>
+                    ) }
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">

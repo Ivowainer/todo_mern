@@ -83,6 +83,7 @@ const TaskProvider = ({ children }) => {
         setAlert({})
       }, 2500)
 
+      setIsOpen(false)
       setName('')
       setDescription('')
       setPriority('')
@@ -103,9 +104,22 @@ const TaskProvider = ({ children }) => {
 
       const taskUpdated = tasks.filter(taskState => taskState._id !== id)
 
-      console.log(taskUpdated)
-
       setTasks(taskUpdated)
+      setId('')
+      setIsOpen(false)
+
+      setName('')
+      setDescription('')
+      setPriority('')
+
+      await setAlert({
+        msg: "Task deleted",
+        error: true
+      })
+
+      setTimeout(() => {
+        setAlert({})
+      }, 2500)
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -144,6 +158,9 @@ const TaskProvider = ({ children }) => {
       const taskUpdatedState = tasks.map(taskState => taskState._id === data.taskUpdated._id ? data.taskUpdated : taskState)
       setTasks(taskUpdatedState)
 
+      setName('')
+      setDescription('')
+      setPriority('')
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
