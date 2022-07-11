@@ -31,3 +31,15 @@
     overflow-wrap: break-word;
         
 }
+.mid-con{
+    overflow-x: hidden;
+}
+
+@media (max-width: 900px) {
+    .aside-nav{
+        width: 100%;
+    }
+    .cont-med {
+        flex-direction: column;
+    }
+}

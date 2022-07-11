@@ -17,13 +17,13 @@ const Main = () => {
     <>
       {isOpen && <ModalPanel setIsOpen={setIsOpen} isOpen={isOpen} />}
       <div className='flex-col h-full w-full flex'>
-        <div className="bg-white shadow-2xl h-1/5 rounded-lg flex items-center px-10 mb-5">
-          <button className="flex transition-color duration-500 items-center gap-1 outline-none justify-center text-md px-5 py-2 bg-default hover:bg-white rounded-lg text-white hover:text-default hover:border-default hover:border" onClick={() => {setIsOpen(true) 
-                                                                                                                                                                                                                                                                setCreateMode(true)} }><AiOutlinePlusCircle/>Add Task</button>
+        <div className="bg-white shadow-2xl sm:h-1/5 rounded-lg flex flex-col sm:flex-row items-center px-5 gap-3 sm:gap-7 sm:px-5 pb-2 sm:pb-0 mb-5">
+          <h1 className="uppercase font-bold text-default text-3xl">todocw</h1>
+          <button className="flex w-full sm:m-0 transition-color flex-1 duration-500 items-center gap-1 outline-none justify-center text-md px-5 py-2 bg-default hover:bg-white rounded-lg text-white hover:text-default hover:border-default hover:border" onClick={() => {setIsOpen(true), setCreateMode(true)} }><AiOutlinePlusCircle/>Add Task</button>
         </div>
-        <div className="bg-white shadow-2xl h-[500px] 2xl:h-[590px] rounded-lg flex flex-col w-full px-10 gap-1">
+        <div className="bg-white shadow-2xl md:flex-1 overflow-y-scroll h-[500px] 2xl:h-[590px] rounded-lg flex flex-col w-full md:px-5 gap-1">
           {Object.keys(alert).length !== 0 && <Alert /> }
-          <div className="flex gap-10 flex-1 flex-wrap overflow-y-scroll">
+          <div className="my-2 md:my-5 flex gap-10 flex-1 flex-wrap justify-center">
             {tasks.map(task => (
               <Card key={task._id} id={task._id} name={task.name} description={task.description} author={task.author} priority={task.priority}/>
             ))}

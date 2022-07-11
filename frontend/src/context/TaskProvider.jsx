@@ -45,9 +45,9 @@ const TaskProvider = ({ children }) => {
       }, 2500)
       return
     }
-    if(description.length >= 60){
+    if(description.length >= 80){
       setAlert({
-        msg: "The maxium of caracters is 60",
+        msg: "The maxium of caracters is 80",
         error: true
       })
       
