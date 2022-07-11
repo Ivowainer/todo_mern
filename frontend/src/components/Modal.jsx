@@ -1,13 +1,13 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { BsFillTrashFill } from 'react-icons/bs'
+import { BsFillTrashFill, BsCheckLg } from 'react-icons/bs'
 
 import useTaskProvider from '../hooks/useTaskProvider'
 import useAuthProvider from '../hooks/useAuthProvider'
 import Alert from './Alert'
 
 const ModalPanel = () => {
-  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen, editTask, createMode, deleteTask, id } = useTaskProvider()
+  const { name, setName, description, setDescription, priority, setPriority, createTask, isOpen, setIsOpen, editTask, createMode, deleteTask, id, setStatus, status } = useTaskProvider()
   const { alert } = useAuthProvider()
 
   const cancelButtonRef = useRef(null)
@@ -82,7 +82,7 @@ const ModalPanel = () => {
                     </div>
                     {!createMode && (
                       <div className='mt-10 ml-4 justify-center gap-20 flex'>
-                        <button>Check</button>
+                        <button onClick={() => status ? setStatus(false) :  setStatus(true)} className={`${status ? 'bg-green-500 text-white' : 'border text-gray-600 border-gray-700'} text-[14px] p-[13px] text-center rounded-full cursor-pointer`}><BsCheckLg /></button>
                         <button onClick={() => deleteTask(id)} className='text-[14px] p-[13px] text-center bg-red-500 rounded-full text-white cursor-pointer'><BsFillTrashFill /></button>
                       </div>
                     ) }

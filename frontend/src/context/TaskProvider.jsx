@@ -13,6 +13,8 @@ const TaskProvider = ({ children }) => {
   const [task, setTask] = useState({})
   const [tasks, setTasks] = useState([])
   const [id, setId] = useState('')
+  const [status, setStatus] = useState(false)
+  const [navPriority, setNavPriority] = useState('')
 
   const { setAlert } = useAuthProvider()
 
@@ -143,6 +145,7 @@ const TaskProvider = ({ children }) => {
       setName(task.data.task.name)
       setDescription(task.data.task.description)
       setPriority(task.data.task.priority)
+      setStatus(task.data.task.status)
     } catch (error){
       console.log(error)
     }
@@ -150,7 +153,7 @@ const TaskProvider = ({ children }) => {
 
   const editTask = async () => {
     try {
-      const { data } = await clientAxios.put(`/tasks/${id}`, { name, description, priority })
+      const { data } = await clientAxios.put(`/tasks/${id}`, { name, description, priority, status })
 
       setId('')
       setIsOpen(false)
@@ -161,6 +164,7 @@ const TaskProvider = ({ children }) => {
       setName('')
       setDescription('')
       setPriority('')
+      setStatus(false)
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -183,7 +187,9 @@ const TaskProvider = ({ children }) => {
         isOpen, setIsOpen, createMode, setCreateMode,
         tasks,
         deleteTask, editTask, getTask,
-        setId, id
+        setStatus, status,
+        setId, id,
+        setNavPriority, navPriority
       }}
     >
       {children}

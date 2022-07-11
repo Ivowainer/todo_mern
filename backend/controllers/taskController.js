@@ -71,6 +71,7 @@ export const editTask = async (req, res) => {
             return res.status(403).json({ msg: error.message })
         }
 
+        task.status = req.body.status
         task.name = req.body.name
         task.description = req.body.description
         task.priority = req.body.priority
