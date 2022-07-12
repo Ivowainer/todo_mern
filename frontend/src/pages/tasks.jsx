@@ -8,10 +8,12 @@ import PanelLayout from '../layout/PanelLayout'
 
 const tasks = () => {
 
-    const { getAuth } = useAuthProvider()
+    const { getAuth, setPage } = useAuthProvider()
     
     useEffect(() => {
         getAuth()
+
+        setPage('tasks')
     }, [])
 
     return (

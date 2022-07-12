@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import cookieParser from 'cookie-parser'
+import fileUpload from 'express-fileupload'
 
 import connectDB from './config/db.js'
 import express from 'express'
@@ -11,6 +12,10 @@ const app = express()
 // Middlewares
 app.use(cookieParser())
 app.use(express.json())
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './upload'
+}))
 connectDB()
 
 // Routing

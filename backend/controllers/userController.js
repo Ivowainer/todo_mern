@@ -1,5 +1,7 @@
 import generarJWT from "../helpers/generarJWT.js"
+import { uploadImgCloduinary } from "../libs/cloudinary.js"
 import User from "../models/User.js"
+import fs from 'fs-extra'
 
 export const register = async (req, res) => {
 
@@ -62,11 +64,41 @@ export const login = async (req, res) => {
     }
 }
 
+export const uploadImage = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        let image;
+        
+        if(req.user._id.toString() != req.params.id){
+            const error = new Error("You don't have sufficient permissions")
+            return res.status(401).json({ msg: error.message })
+        }
+
+        if(!req.files?.bgImage){
+            const error = new Error("Doesn't exists the image")
+            return res.status(403).json({ msg: error.message })
+        }
+
+        const result = await uploadImgCloduinary(req.files.bgImage.tempFilePath)
+        image = {
+            url: result.secure_url,
+            public_id: result.public_id
+        }
+        await fs.remove(req.files.bgImage.tempFilePath)
+
+        user.bgImage = image
+
+        const userUpdated = await user.save()
+
+        res.json({ userUpdated })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const getUserId = async (req, res) =>{
     try {
         const user = await User.findById(req.params.id)
-
-        console.log(user)
     } catch (err) {
         const error = new Error("Not found the user")
         return res.status(404).json({ msg: error.message })

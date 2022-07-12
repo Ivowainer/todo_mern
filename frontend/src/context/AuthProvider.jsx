@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
     const [login, setLogin] = useState(false)
     const [user, setUser] = useState({})
     const [alert, setAlert] = useState({})
+    const [page, setPage] = useState('')
 
     const getAuth = async () => {
         try {
@@ -91,7 +92,8 @@ const AuthProvider = ({ children }) => {
                 setAlert,
                 loginUser,
                 getAuth,
-                user
+                user,
+                page, setPage
             }}
         >
             {children}

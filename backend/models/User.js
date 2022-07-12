@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    bgImage: {
+        url: String,
+        public_id: String,
+    },
     tasks: [
         {
             type: mongoose.Schema.Types.ObjectId,

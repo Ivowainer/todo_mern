@@ -1,15 +1,18 @@
-import { getUser, getUserId, login, register } from '../controllers/userController.js'
+import { getUser, getUserId, login, register, uploadImage } from '../controllers/userController.js'
 
 import express from 'express'
 import checkAuth from '../middlewares/checkAuth.js'
-const route = express.Router()
+const router = express.Router()
 
-route.post('/', register)
+router.post('/', register)
 
-route.post('/login', login)
+router.post('/login', login)
 
-route.get('/user/:id', checkAuth, getUserId)
+router.
+    route('/user/:id')
+    .post(checkAuth, uploadImage)
+    .get(checkAuth, getUserId)
 
-route.get('/user', checkAuth, getUser)
+router.get('/user', checkAuth, getUser)
 
-export default route
+export default router
