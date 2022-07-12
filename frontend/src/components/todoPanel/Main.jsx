@@ -24,6 +24,9 @@ const Main = () => {
         <div className="bg-white shadow-2xl md:flex-1 overflow-y-scroll h-[500px] 2xl:h-[590px] rounded-lg flex flex-col w-full md:px-5 gap-1">
           {Object.keys(alert).length !== 0 && <Alert /> }
           <div className="my-2 md:my-5 flex gap-10 flex-1 flex-wrap justify-center">
+            {Object.keys(tasks).length === 0 && (
+              <p className='text-2xl mt-10 text-gray-400'>No tasks created</p>
+            )}
             {tasks.map(task => (
               <Card key={task._id} id={task._id} name={task.name} description={task.description} author={task.author} priority={task.priority}/>
             ))}

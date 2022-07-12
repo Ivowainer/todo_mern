@@ -10,7 +10,7 @@ const TodoAside = () => {
   const tasksMid = tasks.filter(task => task.priority === "Medium" && task.status === false)
   const tasksHigh = tasks.filter(task => task.priority === "High" && task.status === false)
   return (
-    <div className='aside-nav px-4 py-5 w-1/5 bg-white rounded-lg shadow-2xl'>
+    <div className='aside-nav px-4 py-5 w-1/5 bg-white rounded-lg shadow-card'>
         <p className='mb-4 text-center'>Tasks</p>
         <div className="flex flex-col px-3 text-gray-500">
             <button 

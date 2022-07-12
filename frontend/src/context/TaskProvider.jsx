@@ -15,6 +15,7 @@ const TaskProvider = ({ children }) => {
   const [id, setId] = useState('')
   const [status, setStatus] = useState(false)
   const [navPriority, setNavPriority] = useState('')
+  const [page, setPage] = useState('')
 
   const { setAlert } = useAuthProvider()
 
@@ -189,7 +190,8 @@ const TaskProvider = ({ children }) => {
         deleteTask, editTask, getTask,
         setStatus, status,
         setId, id,
-        setNavPriority, navPriority
+        setNavPriority, navPriority,
+        page, setPage
       }}
     >
       {children}

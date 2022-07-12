@@ -9,11 +9,14 @@ const AuthProvider = ({ children }) => {
     const router = useRouter()
 
     const [login, setLogin] = useState(false)
+    const [user, setUser] = useState({})
     const [alert, setAlert] = useState({})
 
     const getAuth = async () => {
         try {
             const { data } = await clientAxios('/users/user')
+
+            setUser(data)
         } catch {
             await router.push('/')
         }
@@ -87,7 +90,8 @@ const AuthProvider = ({ children }) => {
                 alert,
                 setAlert,
                 loginUser,
-                getAuth
+                getAuth,
+                user
             }}
         >
             {children}
