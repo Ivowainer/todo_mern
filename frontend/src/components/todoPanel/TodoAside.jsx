@@ -19,11 +19,11 @@ const TodoAside = () => {
             >{navPriority === 'Completed' ? <FiArrowDown /> : <FiArrowRight />}Completed</button>
             {navPriority === 'Completed' ? (
               <div>
-                {tasksCheck.map(task => (
-                  <p>{task.name}</p>
+                {tasksCheck?.map(task => (
+                  <p className='underline'>{task.name}</p>
                 ))}
               </div>
-            ) : navPriority === 'Completed' && Object.keys(tasksCheck).length === 0 && "Doesn't exist a task checked"}
+            ) : navPriority === 'Completed' && Object.keys(tasksCheck).length === 0 && "Doesn't exist a task with this priority"}
 
             <button 
               className='px-5 py-3 w-full flex items-center gap-2 text-start font-xl rounded-md border-b' 
@@ -54,7 +54,7 @@ const TodoAside = () => {
               onClick={() => navPriority === 'Low' ? setNavPriority('') : setNavPriority('Low')}
             >{navPriority === 'Low' ? <FiArrowDown /> : <FiArrowRight />}Low</button>
             {navPriority === 'Low' && Object.keys(tasksLow).length !== 0 ? (
-              <div className='mt-3 mb-5 text-start'>
+              <div className='mt-3 mb-5'>
                 {tasksLow?.map(task => (
                   <p className='underline'>{task.name}</p>
                 ))}
