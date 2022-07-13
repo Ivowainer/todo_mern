@@ -12,6 +12,8 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
     const [alert, setAlert] = useState({})
     const [page, setPage] = useState('')
+    const [bgImage, setBgImage] = useState(null)
+    const [id, setId] = useState('')
 
     const getAuth = async () => {
         try {
@@ -63,12 +65,14 @@ const AuthProvider = ({ children }) => {
                 error: false
             })
 
+            console.log(data._id)
+
+            setId(data._id)
+
             setTimeout(() => {
                 setAlert({})
                 router.push('/tasks')
             }, 2000)
-
-            return
         } catch (error) {
             setAlert({
                 msg: error.response.data.msg,
@@ -82,6 +86,28 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    const updateImageBg = async (img) => {
+        if(img.length === 0) return setAlert({ msg: "You can't upload this Image", error: true})
+        
+        
+        try{
+            /* const bodyFormData =  new FormData();
+            bodyFormData.append('bgImage', img); 
+
+            console.log(bodyFormData) */
+
+            const bgImage = img
+
+            const { data }  = await clientAxios.post(`/users/user/${user._id}`, { bgImage }, {
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+
+            console.log(data)
+        } catch(error) {
+            console.log(error)
+        }
+
+    }
     return (
         <AuthContext.Provider
             value={{
@@ -93,7 +119,8 @@ const AuthProvider = ({ children }) => {
                 loginUser,
                 getAuth,
                 user,
-                page, setPage
+                page, setPage,
+                bgImage, setBgImage, updateImageBg
             }}
         >
             {children}

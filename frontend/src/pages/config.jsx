@@ -6,7 +6,7 @@ import MainLayout from '../layout/Head'
 import PanelLayout from '../layout/PanelLayout'
 
 const config = () => {
-    const { getAuth, setPage, user } = useAuthProvider()
+    const { getAuth, setPage, user, updateImageBg, setBgImage } = useAuthProvider()
 
     useEffect(() => {
         getAuth()
@@ -28,9 +28,17 @@ const config = () => {
                         </div>
                     </div>
                     <div className='px-16 py-8 flex h-full flex-col'>
-                        <div className=' bg-gray-500 text-white font-semibold bg-opacity-40 rounded-t-xl h-full flex items-center justify-center cursor-pointer'>
-                            <p>Select a background photo</p>
-                        </div>
+                        <label
+                            className=' bg-gray-500 text-white font-semibold bg-opacity-40 rounded-t-xl h-full items-center justify-center cursor-pointer flex flex-col'
+                        >
+                            Upload a Image Background
+                            <input 
+                                onChange={ e => updateImageBg(e.target.files[0]) }
+                                type="file" 
+                                name="bgImage"
+                                className='hidden text-sm'
+                            />
+                        </label>
                         <button className='text-white font-semibold rounded-b-md px-10 py-5 bg-red-500'>Restore the Background Image</button>
                     </div>
                 </div>

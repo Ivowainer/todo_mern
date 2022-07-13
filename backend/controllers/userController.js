@@ -90,7 +90,7 @@ export const uploadImage = async (req, res) => {
 
         const userUpdated = await user.save()
 
-        res.json({ userUpdated })
+        res.json( userUpdated.bgImage )
     } catch (error) {
         console.log(error)
     }
