@@ -1,5 +1,5 @@
 import generarJWT from "../helpers/generarJWT.js"
-import { uploadImgCloduinary } from "../libs/cloudinary.js"
+import { deleteImgCloudinary, uploadImgCloduinary } from "../libs/cloudinary.js"
 import User from "../models/User.js"
 import fs from 'fs-extra'
 
@@ -77,6 +77,10 @@ export const uploadImage = async (req, res) => {
         if(!req.files?.bgImage){
             const error = new Error("Doesn't exists the image")
             return res.status(403).json({ msg: error.message })
+        }
+        if(user.bgImage.url != undefined){
+            // Eliminar foto anterior
+            const deleteImg = await deleteImgCloudinary(user.bgImage.public_id)
         }
 
         const result = await uploadImgCloduinary(req.files.bgImage.tempFilePath)

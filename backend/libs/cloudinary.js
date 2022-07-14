@@ -11,3 +11,9 @@ export const uploadImgCloduinary = async filePath => {
         folder: 'todocw'
     })
 }
+
+export const deleteImgCloudinary = async filePath => {
+    return await cloudinary.v2.uploader.destroy(filePath, {
+        folder: 'todocw'
+    })
+}

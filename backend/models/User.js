@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     bgImage: {
         url: String,
-        public_id: String,
+        public_id: String
     },
     tasks: [
         {
