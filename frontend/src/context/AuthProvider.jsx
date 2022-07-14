@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({})
     const [alert, setAlert] = useState({})
     const [page, setPage] = useState('')
-    const [bgImage, setBgImage] = useState(null)
+    const [bgImage, setBgImage] = useState({})
     const [id, setId] = useState('')
 
     const getAuth = async () => {
@@ -20,6 +20,8 @@ const AuthProvider = ({ children }) => {
             const { data } = await clientAxios('/users/user')
 
             setUser(data)
+            setId(data._id)
+            setBgImage(data.bgImage?.url)
         } catch {
             await router.push('/')
         }
@@ -65,10 +67,6 @@ const AuthProvider = ({ children }) => {
                 error: false
             })
 
-            console.log(data._id)
-
-            setId(data._id)
-
             setTimeout(() => {
                 setAlert({})
                 router.push('/tasks')
@@ -102,7 +100,7 @@ const AuthProvider = ({ children }) => {
                 headers: { "Content-Type": "multipart/form-data" }
             })
 
-            console.log(data)
+            setBgImage(data)
         } catch(error) {
             console.log(error)
         }

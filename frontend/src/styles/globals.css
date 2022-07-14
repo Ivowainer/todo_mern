@@ -19,7 +19,7 @@
     background-repeat: no-repeat;
 }
 .bg-panel{
-    background-image: url('../../public/wallpaper.svg');
+    /* background-image: url('../../public/wallpaper.svg'); */
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
