@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 import clientAxios from '../helpers/clientAxios'
 import useAuthProvider from '../hooks/useAuthProvider'
+import { toast } from 'react-toastify';
 
 export const TaskContext = createContext()
 
@@ -15,8 +16,6 @@ const TaskProvider = ({ children }) => {
   const [id, setId] = useState('')
   const [status, setStatus] = useState(false)
   const [navPriority, setNavPriority] = useState('')
-
-  const { setAlert } = useAuthProvider()
 
   useEffect(() => {
     const getTasks = async () => {
@@ -37,36 +36,15 @@ const TaskProvider = ({ children }) => {
 
     //Comprobaciones
     if([name, description, priority].includes('')){
-      setAlert({
-        msg: "Fill all the fields",
-        error: true
-      })
-      
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.error('Fill all the fields')
       return
     }
     if(description.length >= 80){
-      setAlert({
-        msg: "The maxium of caracters is 80",
-        error: true
-      })
-      
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.error('The maxium of caracters is 80')
       return
     }
     if(name.length < 3){
-      setAlert({
-        msg: "The minium of caracters is 3",
-        error: true
-      })
-      
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.error("The minium of caracters is 3")
       return
     }
 
@@ -77,26 +55,14 @@ const TaskProvider = ({ children }) => {
 
       setTasks([...tasks, data])
 
-      setAlert({ 
-        msg: "Task created successfully",
-        error: false
-      })
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.success("Task created successfully")
 
       setIsOpen(false)
       setName('')
       setDescription('')
       setPriority('')
     } catch (error) {
-      setAlert({
-        msg: error.response.data.msg,
-        error: true
-      })
-      setTimeout(() => {
-        setAlert({})
-      }, 2500) 
+      toast.error(error.response?.data?.msg)
     }  
   }
   
@@ -114,23 +80,9 @@ const TaskProvider = ({ children }) => {
       setDescription('')
       setPriority('')
 
-      await setAlert({
-        msg: "Task deleted",
-        error: true
-      })
-
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.success('Task deleted')
     } catch (error) {
-      setAlert({
-        msg: error.response.data.msg,
-        error: true
-      })
-
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.error(error.response?.data?.msg)
     }
   }
 
@@ -166,14 +118,7 @@ const TaskProvider = ({ children }) => {
       setPriority('')
       setStatus(false)
     } catch (error) {
-      setAlert({
-        msg: error.response.data.msg,
-        error: true
-      })
-
-      setTimeout(() => {
-        setAlert({})
-      }, 2500)
+      toast.error(error.response?.data?.msg)
     }
   }
 

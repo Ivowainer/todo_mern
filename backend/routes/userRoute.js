@@ -1,4 +1,4 @@
-import { getUser, getUserId, login, register, uploadImage } from '../controllers/userController.js'
+import { deleteImg, getUser, getUserId, login, register, uploadImage } from '../controllers/userController.js'
 
 import express from 'express'
 import checkAuth from '../middlewares/checkAuth.js'
@@ -12,6 +12,7 @@ router.
     route('/user/:id')
     .post(checkAuth, uploadImage)
     .get(checkAuth, getUserId)
+    .delete(checkAuth, deleteImg)
 
 router.get('/user', checkAuth, getUser)
 

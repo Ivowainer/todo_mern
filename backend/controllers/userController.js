@@ -100,6 +100,18 @@ export const uploadImage = async (req, res) => {
     }
 }
 
+export const deleteImg = async (req, res) => {
+    const user = await User.findById(req.params.id)
+
+    const deleteImg = await deleteImgCloudinary(user?.bgImage?.public_id)
+
+    user.bgImage = {}
+
+    const userUpdated = await user.save()
+
+    res.json({ userUpdated })
+}
+
 export const getUserId = async (req, res) =>{
     try {
         const user = await User.findById(req.params.id)

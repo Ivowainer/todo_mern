@@ -1,6 +1,7 @@
 import { AiOutlineMail, AiOutlineGoogle, AiOutlineUser } from 'react-icons/ai';
 import { FaFacebookF } from 'react-icons/fa';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { toast } from 'react-toastify';
 
 import { useEffect } from 'react';
 import Link from 'next/link'
@@ -27,48 +28,51 @@ const Login = () => {
   
     //Comprobaciones
     if(!login && username === ''){
-      setAlert({
+      /* setAlert({
         msg: "Fill all the fields",
         error: true
       })
 
       setTimeout(() => {
         setAlert({})
-      }, 2000)
+      }, 2000) */
+      toast.error("Fill all the fields")
       return
     }
     if(!login && username.length < 3){
-      setAlert({
-        msg: "The username must have at least 3 characters",
+      /* setAlert({
+        msg: "The username must have at least 3 caracters",
         error: true
       })
 
       setTimeout(() => {
         setAlert({})
-      }, 2000)
-
+      }, 2000) */
+      toast.error("The username must have at least 3 caracters")
       return
     }
     if([email, password].includes('')){
-      setAlert({
+      /* setAlert({
         msg: "Fill all the fields",
         error: true
       })
 
       setTimeout(() => {
         setAlert({})
-      }, 2000)
+      }, 2000) */
+      toast.error("Fill all the fields")
       return
     }
     if(password.length < 6){
-      setAlert({
+      /* setAlert({
         msg: "The password must have at least 6 characters",
         error: true
       })
 
       setTimeout(() => {
         setAlert({})
-      }, 2000)
+      }, 2000) */
+      toast.error("The ppasword must have at least 6 caracters")
       return
     }
 

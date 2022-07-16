@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { FiArrowDown, FiArrowRight } from 'react-icons/fi'
 import useTaskProvider from '../../hooks/useTaskProvider'
 
@@ -20,7 +20,7 @@ const TodoAside = () => {
             {navPriority === 'Completed' ? (
               <div>
                 {tasksCheck?.map(task => (
-                  <p className='underline'>{task.name}</p>
+                  <p key={task._id} className='underline'>{task.name}</p>
                 ))}
               </div>
             ) : navPriority === 'Completed' && Object.keys(tasksCheck).length === 0 && "Doesn't exist a task with this priority"}
@@ -32,7 +32,7 @@ const TodoAside = () => {
             {navPriority === 'High' && Object.keys(tasksHigh).length !== 0 ? (
               <div className='px-5 mt-3 mb-5'>
                 {tasksHigh?.map(task => (
-                  <p className='underline'>{task.name}</p>
+                  <p key={task._id} className='underline'>{task.name}</p>
                 ))}
               </div>
             ) : navPriority === 'High' && Object.keys(tasksHigh).length === 0 && "Doesn't exist a task with this priority"}
@@ -44,7 +44,7 @@ const TodoAside = () => {
             {navPriority === 'Mid' && Object.keys(tasksMid).length !== 0 ? (
               <div className='px-5 mt-3 mb-5'>
                 {tasksMid?.map(task => (
-                  <p className='underline'>{task.name}</p>
+                  <p key={task._id} className='underline'>{task.name}</p>
                 ))}
               </div>
             ) : navPriority === 'Mid' && Object.keys(tasksMid).length === 0 && "Doesn't exist a task with this priority"}
@@ -56,7 +56,7 @@ const TodoAside = () => {
             {navPriority === 'Low' && Object.keys(tasksLow).length !== 0 ? (
               <div className='mt-3 mb-5'>
                 {tasksLow?.map(task => (
-                  <p className='underline'>{task.name}</p>
+                  <p key={task._id} className='underline'>{task.name}</p>
                 ))}
               </div>
             ) : navPriority === 'Low' && Object.keys(tasksLow).length === 0 && "Doesn't exist a task with this priority"}

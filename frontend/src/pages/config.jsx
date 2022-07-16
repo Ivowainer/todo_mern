@@ -6,13 +6,13 @@ import MainLayout from '../layout/Head'
 import PanelLayout from '../layout/PanelLayout'
 
 const config = () => {
-    const { getAuth, setPage, user, updateImageBg, setBgImage } = useAuthProvider()
+    const { getAuth, setPage, user, updateImageBg, deleteImg } = useAuthProvider()
 
     useEffect(() => {
         getAuth()
 
         setPage('config')
-        
+
         console.log(user)
     }, [])
 
@@ -39,7 +39,12 @@ const config = () => {
                                 className='hidden text-sm'
                             />
                         </label>
-                        <button className='text-white font-semibold rounded-b-md px-10 py-5 bg-red-500'>Restore the Background Image</button>
+                        <button 
+                            className='text-white font-semibold rounded-b-md px-10 py-5 bg-red-500'
+                            onClick={() => deleteImg()}
+                        >
+                            Restore the Background Image
+                        </button>
                     </div>
                 </div>
             </PanelLayout>
