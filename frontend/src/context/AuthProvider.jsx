@@ -60,7 +60,7 @@ const AuthProvider = ({ children }) => {
     }
 
     const updateImageBg = async (img) => {
-        if(img.length === 0) return /* setAlert({ msg: "You can't upload this Image", error: true}) */ toast.error("You can't upload this Image")
+        if(img === undefined || img.type !== "image/png" && img.type !== "image/jpeg") return toast.error("You can't upload this Image")
 
         try{
             const bgImage = img
@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
             
             toast.success('Background Image reseted')
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data.msg)
         }
     }
     

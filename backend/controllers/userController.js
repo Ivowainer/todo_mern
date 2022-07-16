@@ -103,11 +103,11 @@ export const uploadImage = async (req, res) => {
 export const deleteImg = async (req, res) => {
     const user = await User.findById(req.params.id)
 
-    const deleteImg = await deleteImgCloudinary(user?.bgImage?.public_id)
+    try {
+        const deleteImg = await deleteImgCloudinary(user?.bgImage?.public_id)
+        user.bgImage = {}
 
-    user.bgImage = {}
-
-    const userUpdated = await user.save()
+        const userUpdated = await user.save()
 
     res.json({ userUpdated })
 }

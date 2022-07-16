@@ -27,9 +27,9 @@ const config = () => {
                             <p className='text-default text-3xl font-bold '>Welcome Again!</p>
                         </div>
                     </div>
-                    <div className='px-16 py-8 flex h-full flex-col'>
+                    <div className='md:px-16 py-8 flex h-full flex-col'>
                         <label
-                            className=' bg-gray-500 text-white font-semibold bg-opacity-40 rounded-t-xl h-full items-center justify-center cursor-pointer flex flex-col'
+                            className='h-36 bg-gray-500 text-white font-semibold bg-opacity-40 rounded-t-xl lg:h-full items-center justify-center cursor-pointer flex flex-col'
                         >
                             Upload a Image Background
                             <input 
@@ -40,7 +40,7 @@ const config = () => {
                             />
                         </label>
                         <button 
-                            className='text-white font-semibold rounded-b-md px-10 py-5 bg-red-500'
+                            className='text-white font-semibold rounded-b-md px-2 py-3 md:px-10 md:py-5 bg-red-500'
                             onClick={() => deleteImg()}
                         >
                             Restore the Background Image
