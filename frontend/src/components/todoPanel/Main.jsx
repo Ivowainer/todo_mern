@@ -1,17 +1,27 @@
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import Card from './Card'
-
-import { useState, useEffect } from 'react'
 import ModalPanel from '../Modal'
 import useTaskProvider from '../../hooks/useTaskProvider'
-
-import clientAxios from '../../helpers/clientAxios'
 import useAuthProvider from '../../hooks/useAuthProvider'
 import Alert from '../Alert'
+
+import { motion } from 'framer-motion'
 
 const Main = () => {
   const { isOpen, setIsOpen, tasks, setCreateMode } = useTaskProvider()
   const { alert } = useAuthProvider()
+
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2
+      }
+    }
+  }
 
   return (
     <>
@@ -23,14 +33,19 @@ const Main = () => {
         </div>
         <div className="bg-white shadow-2xl md:flex-1 overflow-y-scroll h-[500px] 2xl:h-[590px] rounded-lg flex flex-col w-full md:px-5 gap-1">
           {Object.keys(alert).length !== 0 && <Alert /> }
-          <div className="my-2 md:my-5 flex gap-10 flex-1 flex-wrap justify-center">
+          <motion.div 
+            className="my-2 md:my-5 flex gap-10 flex-1 flex-wrap justify-center container"
+            variants={container}
+            initial="hidden"
+            animate="visible"
+          >
             {Object.keys(tasks).length === 0 && (
               <p className='text-2xl mt-10 text-gray-400'>No tasks created</p>
             )}
             {tasks.map(task => (
-              <Card key={task._id} id={task._id} name={task.name} description={task.description} author={task.author} priority={task.priority}/>
+              <Card key={task._id} id={task._id} name={task.name} description={task.description} author={task.author} priority={task.priority} />
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </>

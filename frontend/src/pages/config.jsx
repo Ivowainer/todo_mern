@@ -5,6 +5,8 @@ import useAuthProvider from '../hooks/useAuthProvider'
 import MainLayout from '../layout/Head'
 import PanelLayout from '../layout/PanelLayout'
 
+import { motion } from 'framer-motion'
+
 const config = () => {
     const { getAuth, setPage, user, updateImageBg, deleteImg } = useAuthProvider()
 
@@ -21,7 +23,22 @@ const config = () => {
             <MainLayout page="Config | todoCW" />
 
             <PanelLayout>
-                <div className='bg-white shadow-card rounded-lg w-full px-10 flex flex-col'>
+                <motion.div 
+                    className='bg-white shadow-card rounded-lg w-full px-10 flex flex-col'
+                    initial={{ 
+                        x: -600,
+                        backgroundColor: "#9e9e9e",
+                        opacity: 0
+                    }}
+                    animate={{ 
+                        x: 0,
+                        opacity: 1,
+                        backgroundColor: "#fff"
+                    }}
+                    transition={{
+                        default: { duration: .6 },
+                    }}                  
+                >
                     <div className='border-b'>
                         <div className='px-10 py-5 flex gap-5 justify-center items-center'>
                             <p className='text-default text-3xl font-bold '>Welcome Again!</p>
@@ -46,7 +63,7 @@ const config = () => {
                             Restore the Background Image
                         </button>
                     </div>
-                </div>
+                </motion.div>
             </PanelLayout>
         </>
     )

@@ -109,7 +109,11 @@ export const deleteImg = async (req, res) => {
 
         const userUpdated = await user.save()
 
-    res.json({ userUpdated })
+        res.json({ userUpdated })
+    } catch (err) {
+        const error = new Error("The image doesn't exists")
+        res.status(402).json({ msg: error.message })
+    }
 }
 
 export const getUserId = async (req, res) =>{
