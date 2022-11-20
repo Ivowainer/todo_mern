@@ -99,12 +99,12 @@ const Login = () => {
     <div className='flex flex-col flex-1 max-w-full px-20 py-20 items-center gap-6'>
         <p className='text-center text-default uppercase font-bold text-3xl'>{login ? "Sign in to todoCW"  : "Sign Up"}</p>
 
-        <div className="flex gap-3">
+        {/* <div className="flex gap-3">
           <Icons icon={<AiOutlineGoogle />}/>
           <Icons icon={<FaFacebookF />} />
-        </div>
+        </div> */}
 
-        <p className='text-sm text-gray-400'>Or use email account</p>
+        {/* <p className='text-sm text-gray-400'>Or use email account</p> */}
 
         {Object.entries(alert).length != 0 && <Alert />}
 
